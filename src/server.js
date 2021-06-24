@@ -32,10 +32,10 @@ app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(passport.initialize());
+// ROUTES
 
 
-
-
+// ERROR HANDLERS
 app.use(badRequestErrorHandler);
 app.use(notFoundErrorHandler);
 app.use(unauthorizedErrorHandler);

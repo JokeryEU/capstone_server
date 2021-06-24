@@ -1,0 +1,35 @@
+{
+  "name": "capstone_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
+    "watch": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --watchAll",
+    "dev": "nodemon -r dotenv/config ./src/server.js",
+    "start": "node ./src/server.js"
+  },
+  "keywords": [],
+  "author": "Mihai Ivanov",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-list-endpoints": "^5.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.14",
+    "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0",
+    "query-to-mongo": "^0.10.1"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^10.0.0",
+    "jest": "^27.0.5",
+    "nodemon": "^2.0.7",
+    "supertest": "^6.1.3"
+  }
+}

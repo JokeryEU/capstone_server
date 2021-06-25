@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import reviewSchema from "./reviewModel.js"
+
 
 const { Schema, model } = mongoose;
 
@@ -33,7 +35,7 @@ const productSchema = new Schema(
       trim: true,
       required: true,
     },
-    reviews: [],
+    reviews: [reviewSchema],
     rating: {
       type: Number,
       trim: true,

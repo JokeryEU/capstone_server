@@ -65,3 +65,29 @@ export const getUserProfile = async (req, res, next) => {
     next(error)
   }
 }
+
+// @description Update user profile
+// @route PUT /users/profile
+// @access Private
+export const updateUserProfile = async (req, res, next) => {
+  try {
+    const user = req.user
+
+    if (user) {
+      user.firstName = req.body.firstName || user.firstName
+      user.lastName = req.body.lastName || user.lastName
+      user.email = req.body.email || user.email
+      if (req.body.password) {
+        user.password = req.body.password
+      }
+
+      const updatedUser = await user.save()
+
+      res.send(updatedUser)
+    } else {
+      next(new ErrorResponse('Bad request', 400))
+    }
+  } catch (error) {
+    next(error)
+  }
+}

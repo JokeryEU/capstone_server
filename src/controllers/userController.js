@@ -117,7 +117,7 @@ export const deleteUser = async (req, res, next) => {
     if (!user) {
       next(new ErrorResponse('User not found', 404))
     } else {
-      res.status(204).send('Deleted')
+      res.status(204).send()
     }
   } catch (error) {
     next(error)

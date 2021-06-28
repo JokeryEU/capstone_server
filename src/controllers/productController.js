@@ -30,3 +30,20 @@ export const getProductById = async (req, res, next) => {
     next(error)
   }
 }
+
+// @description Delete a product
+// @route DELETE /products/:id
+// @access Private/Admin
+export const deleteProduct = async (req, res, next) => {
+  try {
+    const product = await ProductModel.findByIdAndDelete(req.params.id)
+
+    if (!product) {
+      next(new ErrorResponse('Product not found', 404))
+    } else {
+      res.status(204).send()
+    }
+  } catch (error) {
+    next(error)
+  }
+}

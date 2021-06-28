@@ -91,3 +91,16 @@ export const updateUserProfile = async (req, res, next) => {
     next(error)
   }
 }
+
+// @description Get all users
+// @route GET /users
+// @access Private/Admin
+export const getUsers = async (req, res, next) => {
+  try {
+    const users = await UserModel.find({})
+
+    res.status(200).send(users)
+  } catch (error) {
+    next(error)
+  }
+}

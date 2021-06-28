@@ -6,7 +6,7 @@ import {
 
 const router = express.Router()
 
-router.router('/').get(getProducts)
-router.router('/:id').get(getProductById)
+router.route('/').get(getProducts)
+router.route('/:id').get(getProductById)
 
 export default router

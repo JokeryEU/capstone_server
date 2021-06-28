@@ -122,3 +122,41 @@ export const deleteUser = async (req, res, next) => {
     next(error)
   }
 }
+
+// @description Get user by ID
+// @route GET /users/:id
+// @access Private/Admin
+export const getUserById = async (req, res, next) => {
+  try {
+    const user = await UserModel.findById(req.params.id)
+    if (user) {
+      res.status(200).send(user)
+    }
+    next(new ErrorResponse('User not found', 404))
+  } catch (error) {
+    next(error)
+  }
+}
+
+// @description Update user
+// @route PUT /users/:id
+// @access Private/Admin
+export const updateUser = async (req, res, next) => {
+  try {
+    const user = await UserModel.findById(req.params.id)
+
+    if (user) {
+      user.firstName = req.body.firstName || user.firstName
+      user.lastName = req.body.lastName || user.lastName
+      user.email = req.body.email || user.email
+
+      const updatedUser = await user.save()
+
+      res.send(updatedUser)
+    } else {
+      next(new ErrorResponse('Bad request', 400))
+    }
+  } catch (error) {
+    next(error)
+  }
+}

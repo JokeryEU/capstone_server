@@ -83,6 +83,9 @@ export const updateProduct = async (req, res, next) => {
       product.brand = brand
       product.category = category
       product.countInStock = countInStock
+
+      const updatedProduct = await product.save()
+      res.send(updatedProduct)
     } else {
       next(new ErrorResponse('Product not found', 404))
     }

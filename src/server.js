@@ -14,6 +14,7 @@ import {
 } from './middlewares/errorHandlers.js'
 import listEndpoints from 'express-list-endpoints'
 import productRoutes from './routes/productRoutes.js'
+import userRoutes from './routes/userRoutes.js'
 
 const app = express()
 
@@ -37,6 +38,7 @@ app.use(passport.initialize())
 // ROUTES
 
 app.use('/products', productRoutes)
+app.use('/users', userRoutes)
 
 // ERROR HANDLERS
 app.use(badRequestErrorHandler)

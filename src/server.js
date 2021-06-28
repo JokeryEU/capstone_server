@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import passport from 'passport'
-import oauth from './auth/oauth.js'
+
 import ErrorResponse from './middlewares/errorResponse.js'
 import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'

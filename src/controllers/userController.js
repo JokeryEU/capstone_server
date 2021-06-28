@@ -58,6 +58,21 @@ export const registerUser = async (req, res, next) => {
   }
 }
 
+// @description Logout user
+// @route GET /users/profile
+// @access Private
+export const logoutUser = async (req, res, next) => {
+  try {
+    req.user.refreshToken = null
+    await req.user.save()
+    res.clearCookie('accessToken')
+    res.clearCookie('refreshToken')
+    res.status(200).send()
+  } catch (error) {
+    next(error)
+  }
+}
+
 // @description Get user profile
 // @route GET /users/profile
 // @access Private

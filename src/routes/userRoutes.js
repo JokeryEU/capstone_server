@@ -4,6 +4,7 @@ import {
   getUserProfile,
   registerUser,
   updateUserProfile,
+  logoutUser,
   getUsers,
   deleteUser,
   getUserById,
@@ -16,6 +17,7 @@ const router = express.Router()
 router.route('/').get(jwtAuth, adminOnly, getUsers)
 router.post('/register', registerUser)
 router.post('/login', authUser)
+router.post('/logout', jwtAuth, logoutUser)
 router
   .route('/profile')
   .get(jwtAuth, getUserProfile)

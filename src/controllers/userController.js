@@ -116,8 +116,9 @@ export const deleteUser = async (req, res, next) => {
     const user = await UserModel.findByIdAndDelete(req.params.id)
     if (!user) {
       next(new ErrorResponse('User not found', 404))
+    } else {
+      res.status(204).send('Deleted')
     }
-    res.status(204).send('Deleted')
   } catch (error) {
     next(error)
   }
@@ -131,8 +132,9 @@ export const getUserById = async (req, res, next) => {
     const user = await UserModel.findById(req.params.id)
     if (user) {
       res.status(200).send(user)
+    } else {
+      next(new ErrorResponse('User not found', 404))
     }
-    next(new ErrorResponse('User not found', 404))
   } catch (error) {
     next(error)
   }

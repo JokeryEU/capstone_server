@@ -47,3 +47,46 @@ export const deleteProduct = async (req, res, next) => {
     next(error)
   }
 }
+
+// @description Create a product
+// @route POST /products
+// @access Private/Admin
+export const createProduct = async (req, res, next) => {
+  try {
+    const newProduct = await ProductModel.create(req.body)
+
+    if (newProduct) {
+      res.status(201).send('Created')
+    } else {
+      next(new ErrorResponse('Bad request', 400))
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+
+// @description Update product
+// @route PUT /products/:id
+// @access Private/Admin
+export const updateProduct = async (req, res, next) => {
+  try {
+    const { name, price, description, image, brand, category, countInStock } =
+      req.body
+
+    const product = await ProductModel.findById(req.params.id)
+
+    if (product) {
+      product.name = name
+      product.price = price
+      product.description = description
+      product.image = image
+      product.brand = brand
+      product.category = category
+      product.countInStock = countInStock
+    } else {
+      next(new ErrorResponse('Product not found', 404))
+    }
+  } catch (error) {
+    next(error)
+  }
+}

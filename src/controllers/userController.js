@@ -156,7 +156,7 @@ export const updateUser = async (req, res, next) => {
 
       res.send(updatedUser)
     } else {
-      next(new ErrorResponse('Bad request', 400))
+      next(new ErrorResponse('User not found', 404))
     }
   } catch (error) {
     next(error)

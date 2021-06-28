@@ -54,10 +54,10 @@ userSchema.pre('save', async function (next) {
   next()
 })
 
-userSchema.statics.checkCredentials = async function (email, password) {
+userSchema.statics.checkCredentials = async function (email, enteredPassword) {
   const user = await this.findOne({ email })
   if (user) {
-    const isMatch = await bcrypt.compare(password, user.password)
+    const isMatch = await bcrypt.compare(enteredPassword, user.password)
     if (isMatch) return user
     else return null
   } else return null

@@ -1,7 +1,6 @@
 import UserModel from '../models/userModel.js'
 import ErrorResponse from '../middlewares/errorResponse.js'
-import { jwtAuth } from '../auth/authUser.js'
-import { auth, refreshJWT } from '../auth/tools.js'
+import { auth } from '../auth/tools.js'
 
 // @description Auth user & get tokens
 // @route POST /users/login
@@ -49,7 +48,7 @@ export const registerUser = async (req, res, next) => {
       })
       res.status(201).send(_id)
     } else {
-      throw new ErrorResponse('User already exists', 400)
+      next(new ErrorResponse('User already exists', 400))
     }
   } catch (error) {
     next(error)

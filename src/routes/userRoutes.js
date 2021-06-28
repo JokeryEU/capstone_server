@@ -5,6 +5,7 @@ import {
   registerUser,
   updateUserProfile,
   getUsers,
+  deleteUser,
 } from '../controllers/userController.js'
 import { jwtAuth, adminOnly } from '../auth/authUser.js'
 
@@ -17,5 +18,5 @@ router
   .route('/profile')
   .get(jwtAuth, getUserProfile)
   .put(jwtAuth, updateUserProfile)
-
+router.route('/:id').delete(jwtAuth, adminOnly, deleteUser)
 export default router

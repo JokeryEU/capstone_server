@@ -104,3 +104,18 @@ export const getUsers = async (req, res, next) => {
     next(error)
   }
 }
+
+// @description Delete user
+// @route DELETE /users/:id
+// @access Private/Admin
+export const deleteUser = async (req, res, next) => {
+  try {
+    const user = await UserModel.findByIdAndDelete(req.params.id)
+    if (!user) {
+      next(new ErrorResponse('User not found', 404))
+    }
+    res.status(204).send('Deleted')
+  } catch (error) {
+    next(error)
+  }
+}

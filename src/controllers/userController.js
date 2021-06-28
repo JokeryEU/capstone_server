@@ -30,7 +30,10 @@ export const authUser = async (req, res, next) => {
 // @access Public
 export const registerUser = async (req, res, next) => {
   try {
-    const newUser = await UserModel.create(req.body)
+    const newUser = await UserModel.create({
+      ...req.body,
+      role: req.body.role === 'Admin' ? 'User' : 'User',
+    })
     if (newUser) {
       const { _id } = newUser
       const user = await UserModel.checkCredentials(

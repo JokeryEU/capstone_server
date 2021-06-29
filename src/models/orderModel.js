@@ -8,6 +8,7 @@ const orderSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
+      immutable: true,
     },
     orderItems: [
       {

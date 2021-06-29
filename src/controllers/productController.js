@@ -53,7 +53,12 @@ export const deleteProduct = async (req, res, next) => {
 // @access Private/Admin
 export const createProduct = async (req, res, next) => {
   try {
-    const newProduct = await ProductModel.create(req.body)
+    console.log(req.body)
+    const newProduct = await ProductModel.create({
+      ...req.body,
+      user: req.user._id,
+      image: req.file.path,
+    })
 
     if (newProduct) {
       res.status(201).send('Created')
@@ -70,8 +75,7 @@ export const createProduct = async (req, res, next) => {
 // @access Private/Admin
 export const updateProduct = async (req, res, next) => {
   try {
-    const { name, price, description, image, brand, category, countInStock } =
-      req.body
+    const { name, price, description, brand, category, countInStock } = req.body
 
     const product = await ProductModel.findById(req.params.id)
 
@@ -79,7 +83,7 @@ export const updateProduct = async (req, res, next) => {
       product.name = name
       product.price = price
       product.description = description
-      product.image = image
+      product.image = req.file.path
       product.brand = brand
       product.category = category
       product.countInStock = countInStock

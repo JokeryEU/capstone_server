@@ -7,14 +7,29 @@ import {
   createProduct,
   updateProduct,
 } from '../controllers/productController.js'
+import { uploadToCloudinary } from '../middlewares/picUpload.js'
 
 const router = express.Router()
 
-router.route('/').get(getProducts).post(jwtAuth, adminOnly, createProduct)
+router
+  .route('/')
+  .get(getProducts)
+  .post(
+    jwtAuth,
+    adminOnly,
+    uploadToCloudinary.single('prodImage'),
+    createProduct
+  )
+
 router
   .route('/:id')
   .get(getProductById)
   .delete(jwtAuth, adminOnly, deleteProduct)
-  .put(jwtAuth, adminOnly, updateProduct)
+  .put(
+    jwtAuth,
+    adminOnly,
+    uploadToCloudinary.single('prodImage'),
+    updateProduct
+  )
 
 export default router

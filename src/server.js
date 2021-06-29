@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import morgan from 'morgan'
 import passport from 'passport'
 
 import ErrorResponse from './middlewares/errorResponse.js'
@@ -34,6 +35,7 @@ app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
 app.use(express.json())
 app.use(cookieParser())
 app.use(passport.initialize())
+app.use(morgan('dev'))
 
 // ROUTES
 

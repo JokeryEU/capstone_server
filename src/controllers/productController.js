@@ -53,7 +53,6 @@ export const deleteProduct = async (req, res, next) => {
 // @access Private/Admin
 export const createProduct = async (req, res, next) => {
   try {
-    console.log(req.body)
     const newProduct = await ProductModel.create({
       ...req.body,
       user: req.user._id,

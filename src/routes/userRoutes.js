@@ -9,6 +9,7 @@ import {
   deleteUser,
   getUserById,
   updateUser,
+  refreshTokens,
 } from '../controllers/userController.js'
 import { jwtAuth, adminOnly } from '../auth/authUser.js'
 
@@ -18,10 +19,13 @@ router.route('/').get(jwtAuth, adminOnly, getUsers)
 router.post('/register', registerUser)
 router.post('/login', authUser)
 router.post('/logout', jwtAuth, logoutUser)
+router.post('/refreshtokens', jwtAuth, refreshTokens)
+
 router
   .route('/profile')
   .get(jwtAuth, getUserProfile)
   .put(jwtAuth, updateUserProfile)
+
 router
   .route('/:id')
   .delete(jwtAuth, adminOnly, deleteUser)

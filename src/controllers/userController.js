@@ -1,6 +1,6 @@
 import UserModel from '../models/userModel.js'
 import ErrorResponse from '../middlewares/errorResponse.js'
-import { auth } from '../auth/tools.js'
+import { auth, refreshJWT } from '../auth/tools.js'
 
 // @description Auth user & get tokens
 // @route POST /users/login
@@ -59,7 +59,7 @@ export const registerUser = async (req, res, next) => {
 }
 
 // @description Logout user
-// @route GET /users/profile
+// @route POST /users/logout
 // @access Private
 export const logoutUser = async (req, res, next) => {
   try {
@@ -70,6 +70,31 @@ export const logoutUser = async (req, res, next) => {
     res.status(200).send()
   } catch (error) {
     next(error)
+  }
+}
+
+// @description Get new tokens for the logged user
+// @route POST /users/refreshtokens
+// @access Private
+export const refreshTokens = async (req, res, next) => {
+  const oldRefreshToken = req.body.refreshToken
+  if (!oldRefreshToken)
+    return next(new ErrorResponse('Refresh token is missing', 400))
+
+  try {
+    const newTokens = await refreshJWT(oldRefreshToken)
+    res.cookie('accessToken', newTokens.accessToken, {
+      sameSite: 'lax',
+      httpOnly: true,
+    })
+    res.cookie('refreshToken', newTokens.refreshToken, {
+      sameSite: 'lax',
+      httpOnly: true,
+    })
+
+    res.send()
+  } catch (error) {
+    next(new ErrorResponse(error, 400))
   }
 }
 

@@ -56,3 +56,30 @@ export const getOrderById = async (req, res, next) => {
     next(error)
   }
 }
+
+// @description Update order to paid
+// @route PUT /orders/:id/pay
+// @access Private
+export const updateOrderToPaid = async (req, res, next) => {
+  try {
+    const order = await orderModel.findById(req.params.id)
+
+    if (order) {
+      order.isPaid = true
+      order.paidAt = Date.now()
+      order.paymentResult = {
+        id: req.body.id,
+        status: req.body.status,
+        update_time: req.body.update_time,
+        email_adress: req.body.payer.email_adress,
+      }
+
+      const updatedOrder = await order.save()
+      res.send(updatedOrder)
+    } else {
+      next(new ErrorResponse('Order not found', 404))
+    }
+  } catch (error) {
+    next(error)
+  }
+}

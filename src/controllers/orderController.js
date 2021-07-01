@@ -43,9 +43,10 @@ export const addOrderItems = async (req, res, next) => {
 // @access Private
 export const getOrderById = async (req, res, next) => {
   try {
-    const order = await orderModel
-      .findById(req.params.id)
-      .populate('user', 'firstName lastName email')
+    const order = await OrderModel.findById(req.params.id).populate(
+      'user',
+      'firstName lastName email'
+    )
 
     if (order) {
       res.send(order)
@@ -62,7 +63,7 @@ export const getOrderById = async (req, res, next) => {
 // @access Private
 export const updateOrderToPaid = async (req, res, next) => {
   try {
-    const order = await orderModel.findById(req.params.id)
+    const order = await OrderModel.findById(req.params.id)
 
     if (order) {
       order.isPaid = true
@@ -79,6 +80,19 @@ export const updateOrderToPaid = async (req, res, next) => {
     } else {
       next(new ErrorResponse('Order not found', 404))
     }
+  } catch (error) {
+    next(error)
+  }
+}
+
+// @description Get logged in user orders
+// @route GET /orders/myorders
+// @access Private
+export const getMyOrders = async (req, res, next) => {
+  try {
+    const orders = await OrderModel.find({ user: req.user._id })
+
+    res.send(orders)
   } catch (error) {
     next(error)
   }

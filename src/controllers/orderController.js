@@ -84,6 +84,26 @@ export const updateOrderToPaid = async (req, res, next) => {
     next(error)
   }
 }
+// @description Update order to delivered
+// @route PUT /orders/:id/deliver
+// @access Private/Admin
+export const updateOrderToDelivered = async (req, res, next) => {
+  try {
+    const order = await OrderModel.findById(req.params.id)
+
+    if (order) {
+      order.isDelivered = true
+      order.deliveredAt = Date.now()
+
+      const updatedOrder = await order.save()
+      res.send(updatedOrder)
+    } else {
+      next(new ErrorResponse('Order not found', 404))
+    }
+  } catch (error) {
+    next(error)
+  }
+}
 
 // @description Get logged in user orders
 // @route GET /orders/myorders

@@ -3,6 +3,7 @@ import {
   addOrderItems,
   getOrderById,
   updateOrderToPaid,
+  updateOrderToDelivered,
   getMyOrders,
   getOrders,
 } from '../controllers/orderController.js'
@@ -16,6 +17,7 @@ router
   .get(jwtAuth, adminOnly, getOrders)
 router.route('/myorders').get(jwtAuth, getMyOrders)
 router.route('/:id').get(jwtAuth, getOrderById)
-router.route('/:id/pay').get(jwtAuth, updateOrderToPaid)
+router.route('/:id/pay').put(jwtAuth, updateOrderToPaid)
+router.route('/:id/deliver').put(jwtAuth, adminOnly, updateOrderToDelivered)
 
 export default router

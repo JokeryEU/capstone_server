@@ -97,3 +97,18 @@ export const getMyOrders = async (req, res, next) => {
     next(error)
   }
 }
+// @description Get all orders
+// @route GET /orders
+// @access Private/Admin
+export const getOrders = async (req, res, next) => {
+  try {
+    const orders = await OrderModel.find({}).populate(
+      'user',
+      '_id firstName lastName'
+    )
+
+    res.send(orders)
+  } catch (error) {
+    next(error)
+  }
+}

@@ -37,3 +37,22 @@ export const addOrderItems = async (req, res, next) => {
     next(error)
   }
 }
+
+// @description Get order by ID
+// @route GET /orders/:id
+// @access Private
+export const getOrderById = async (req, res, next) => {
+  try {
+    const order = await orderModel
+      .findById(req.params.id)
+      .populate('user', 'firstName lastName email')
+
+    if (order) {
+      res.send(order)
+    } else {
+      next(new ErrorResponse('Order not found', 404))
+    }
+  } catch (error) {
+    next(error)
+  }
+}

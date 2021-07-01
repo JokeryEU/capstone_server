@@ -16,6 +16,7 @@ import {
 import listEndpoints from 'express-list-endpoints'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
+import orderRoutes from './routes/orderRoutes.js'
 
 const app = express()
 
@@ -41,6 +42,7 @@ app.use(morgan('dev'))
 
 app.use('/products', productRoutes)
 app.use('/users', userRoutes)
+app.use('/orders', orderRoutes)
 
 // ERROR HANDLERS
 app.use(badRequestErrorHandler)

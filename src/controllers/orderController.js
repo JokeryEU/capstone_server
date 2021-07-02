@@ -17,7 +17,7 @@ export const addOrderItems = async (req, res, next) => {
     } = req.body
 
     if (orderItems && orderItems.length === 0) {
-      next(new ErrorResponse('No order items', 400))
+      throw new ErrorResponse('No order items', 400)
     } else {
       const order = new OrderModel({
         orderItems,
@@ -51,7 +51,7 @@ export const getOrderById = async (req, res, next) => {
     if (order) {
       res.send(order)
     } else {
-      next(new ErrorResponse('Order not found', 404))
+      throw new ErrorResponse('Order not found', 404)
     }
   } catch (error) {
     next(error)
@@ -78,7 +78,7 @@ export const updateOrderToPaid = async (req, res, next) => {
       const updatedOrder = await order.save()
       res.send(updatedOrder)
     } else {
-      next(new ErrorResponse('Order not found', 404))
+      throw new ErrorResponse('Order not found', 404)
     }
   } catch (error) {
     next(error)
@@ -98,7 +98,7 @@ export const updateOrderToDelivered = async (req, res, next) => {
       const updatedOrder = await order.save()
       res.send(updatedOrder)
     } else {
-      next(new ErrorResponse('Order not found', 404))
+      throw new ErrorResponse('Order not found', 404)
     }
   } catch (error) {
     next(error)

@@ -24,7 +24,7 @@ export const getProductById = async (req, res, next) => {
     if (product) {
       res.status(200).send(product)
     } else {
-      next(new ErrorResponse(`id not found`, 404))
+      throw new ErrorResponse(`id not found`, 404)
     }
   } catch (error) {
     next(error)
@@ -39,7 +39,7 @@ export const deleteProduct = async (req, res, next) => {
     const product = await ProductModel.findByIdAndDelete(req.params.id)
 
     if (!product) {
-      next(new ErrorResponse('Product not found', 404))
+      throw new ErrorResponse('Product not found', 404)
     } else {
       res.status(204).send()
     }
@@ -62,7 +62,7 @@ export const createProduct = async (req, res, next) => {
     if (newProduct) {
       res.status(201).send('Created')
     } else {
-      next(new ErrorResponse('Bad request', 400))
+      throw new ErrorResponse('Bad request', 400)
     }
   } catch (error) {
     next(error)
@@ -90,7 +90,7 @@ export const updateProduct = async (req, res, next) => {
       const updatedProduct = await product.save()
       res.send(updatedProduct)
     } else {
-      next(new ErrorResponse('Product not found', 404))
+      throw new ErrorResponse('Product not found', 404)
     }
   } catch (error) {
     next(error)
@@ -112,7 +112,7 @@ export const createProductReview = async (req, res, next) => {
       )
 
       if (alreadyReviewed) {
-        next(new ErrorResponse('Product already reviewed', 400))
+        throw new ErrorResponse('Product already reviewed', 400)
       }
 
       const review = {
@@ -132,7 +132,7 @@ export const createProductReview = async (req, res, next) => {
       await product.save()
       res.status(201).send('Review added')
     } else {
-      next(new ErrorResponse('Product not found', 404))
+      throw new ErrorResponse('Product not found', 404)
     }
   } catch (error) {
     next(error)

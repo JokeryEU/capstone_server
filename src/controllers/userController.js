@@ -51,7 +51,7 @@ export const registerUser = async (req, res, next) => {
       })
       res.status(201).send(_id)
     } else {
-      next(new ErrorResponse('User already exists', 400))
+      throw new ErrorResponse('User already exists', 400)
     }
   } catch (error) {
     next(error)
@@ -128,7 +128,7 @@ export const updateUserProfile = async (req, res, next) => {
 
       res.send(updatedUser)
     } else {
-      next(new ErrorResponse('Bad request', 400))
+      throw new ErrorResponse('Bad request', 400)
     }
   } catch (error) {
     next(error)
@@ -155,7 +155,7 @@ export const deleteUser = async (req, res, next) => {
   try {
     const user = await UserModel.findByIdAndDelete(req.params.id)
     if (!user) {
-      next(new ErrorResponse('User not found', 404))
+      throw new ErrorResponse('User not found', 404)
     } else {
       res.status(204).send()
     }
@@ -173,7 +173,7 @@ export const getUserById = async (req, res, next) => {
     if (user) {
       res.status(200).send(user)
     } else {
-      next(new ErrorResponse('User not found', 404))
+      throw new ErrorResponse('User not found', 404)
     }
   } catch (error) {
     next(error)
@@ -196,7 +196,7 @@ export const updateUser = async (req, res, next) => {
 
       res.send(updatedUser)
     } else {
-      next(new ErrorResponse('User not found', 404))
+      throw new ErrorResponse('User not found', 404)
     }
   } catch (error) {
     next(error)

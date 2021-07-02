@@ -96,3 +96,45 @@ export const updateProduct = async (req, res, next) => {
     next(error)
   }
 }
+
+// @description Create new review
+// @route POST /products/:id/reviews
+// @access Private
+export const createProductReview = async (req, res, next) => {
+  try {
+    const { rating, comment } = req.body
+
+    const product = await ProductModel.findById(req.params.id)
+
+    if (product) {
+      const alreadyReviewed = product.reviews.find(
+        (review) => review.user.toString() === req.user._id.toString()
+      )
+
+      if (alreadyReviewed) {
+        next(new ErrorResponse('Product already reviewed', 400))
+      }
+
+      const review = {
+        name: req.user.firstName + ' ' + req.user.lastName,
+        rating: Number(rating),
+        comment,
+        user: req.user._id,
+      }
+      product.reviews.push(review)
+
+      product.numReviews = product.reviews.length
+
+      product.rating =
+        product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+        product.reviews.length
+
+      await product.save()
+      res.status(201).send('Review added')
+    } else {
+      next(new ErrorResponse('Product not found', 404))
+    }
+  } catch (error) {
+    next(error)
+  }
+}

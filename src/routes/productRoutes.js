@@ -6,6 +6,7 @@ import {
   deleteProduct,
   createProduct,
   updateProduct,
+  createProductReview,
 } from '../controllers/productController.js'
 import { uploadToCloudinary } from '../middlewares/picUpload.js'
 
@@ -20,6 +21,8 @@ router
     uploadToCloudinary.single('prodImage'),
     createProduct
   )
+
+router.route('/:id/reviews').post(jwtAuth, createProductReview)
 
 router
   .route('/:id')

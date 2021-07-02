@@ -1,12 +1,20 @@
 import ProductModel from '../models/productModel.js'
 import ErrorResponse from '../middlewares/errorResponse.js'
 
-// @description Fetch all products
+// @description Fetch all products or query by name
 // @route GET /products
 // @access Public
 export const getProducts = async (req, res, next) => {
   try {
-    const products = await ProductModel.find({})
+    const keyword = req.query.keyword
+      ? {
+          name: {
+            $regex: new RegExp(req.query.keyword, 'i'),
+          },
+        }
+      : {}
+
+    const products = await ProductModel.find({ ...keyword })
 
     res.status(200).send(products)
   } catch (error) {

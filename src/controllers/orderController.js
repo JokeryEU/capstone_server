@@ -84,6 +84,7 @@ export const updateOrderToPaid = async (req, res, next) => {
     next(error)
   }
 }
+
 // @description Update order to delivered
 // @route PUT /orders/:id/deliver
 // @access Private/Admin
@@ -117,6 +118,7 @@ export const getMyOrders = async (req, res, next) => {
     next(error)
   }
 }
+
 // @description Get all orders
 // @route GET /orders
 // @access Private/Admin

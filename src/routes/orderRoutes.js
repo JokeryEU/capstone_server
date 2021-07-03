@@ -15,6 +15,7 @@ router
   .route('/')
   .post(jwtAuth, addOrderItems)
   .get(jwtAuth, adminOnly, getOrders)
+
 router.route('/myorders').get(jwtAuth, getMyOrders)
 router.route('/:id').get(jwtAuth, getOrderById)
 router.route('/:id/pay').put(jwtAuth, updateOrderToPaid)

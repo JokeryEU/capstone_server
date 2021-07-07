@@ -18,7 +18,8 @@ export const authUser = async (req, res, next) => {
       sameSite: 'lax',
       httpOnly: true,
     })
-    res.status(200).send()
+
+    res.status(200).send(user)
   } catch (error) {
     console.log(error)
     next(error)
@@ -35,7 +36,6 @@ export const registerUser = async (req, res, next) => {
       role: req.body.role === 'Admin' ? 'User' : 'User',
     })
     if (newUser) {
-      const { _id } = newUser
       const user = await UserModel.checkCredentials(
         req.body.email,
         req.body.password
@@ -49,7 +49,7 @@ export const registerUser = async (req, res, next) => {
         sameSite: 'lax',
         httpOnly: true,
       })
-      res.status(201).send(_id)
+      res.status(201).send(newUser)
     } else {
       throw new ErrorResponse('User already exists', 400)
     }

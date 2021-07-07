@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
+import ErrorResponse from '../middlewares/errorResponse.js'
 
 const { Schema, model } = mongoose
 
@@ -63,8 +64,8 @@ userSchema.statics.checkCredentials = async function (email, enteredPassword) {
   if (user) {
     const isMatch = await bcrypt.compare(enteredPassword, user.password)
     if (isMatch) return user
-    else return null
-  } else return null
+    else throw new ErrorResponse('Invalid email or password', 401)
+  } else throw new ErrorResponse('Invalid email or password', 401)
 }
 
 userSchema.methods.toJSON = function () {

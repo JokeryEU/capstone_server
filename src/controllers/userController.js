@@ -21,7 +21,6 @@ export const authUser = async (req, res, next) => {
 
     res.status(200).send(user)
   } catch (error) {
-    console.log(error)
     next(error)
   }
 }
@@ -54,7 +53,9 @@ export const registerUser = async (req, res, next) => {
       throw new ErrorResponse('User already exists', 400)
     }
   } catch (error) {
-    next(error)
+    if (error.code === 11000) return next(new ErrorResponse([], 11000))
+
+    next(new ErrorResponse(error.message, 400))
   }
 }
 

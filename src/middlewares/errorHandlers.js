@@ -13,10 +13,17 @@ export const badRequestErrorHandler = (err, req, res, next) => {
     next(err)
   }
 }
+export const duplicateRequestErrorHandler = (err, req, res, next) => {
+  if (err.statusCode === 11000) {
+    res.status(400).send(err.message || 'Email already exists!')
+  } else {
+    next(err)
+  }
+}
 
 export const unauthorizedErrorHandler = (err, req, res, next) => {
   if (err.statusCode === 401) {
-    res.status(401).send(err.message || 'Please sign in!')
+    res.status(401).send(err.message || 'Unauthorized!')
   } else {
     next(err)
   }

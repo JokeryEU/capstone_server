@@ -12,6 +12,7 @@ import {
   catchAllErrorHandler,
   unauthorizedErrorHandler,
   forbiddenErrorHandler,
+  duplicateRequestErrorHandler,
 } from './middlewares/errorHandlers.js'
 import listEndpoints from 'express-list-endpoints'
 import productRoutes from './routes/productRoutes.js'
@@ -46,6 +47,7 @@ app.use('/orders', orderRoutes)
 
 // ERROR HANDLERS
 app.use(badRequestErrorHandler)
+app.use(duplicateRequestErrorHandler)
 app.use(notFoundErrorHandler)
 app.use(unauthorizedErrorHandler)
 app.use(forbiddenErrorHandler)

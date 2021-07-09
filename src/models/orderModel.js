@@ -17,7 +17,7 @@ const orderSchema = new Schema(
           trim: true,
           required: true,
         },
-        quantity: {
+        qty: {
           type: Number,
           trim: true,
           required: true,
@@ -44,7 +44,7 @@ const orderSchema = new Schema(
       city: { type: String, trim: true, required: true },
       country: { type: String, trim: true, required: true },
       postalCode: { type: String, trim: true, required: true },
-      phoneNumber: { type: Number, trim: true, required: true },
+      phoneNumber: { type: String, trim: true, required: true },
     },
     paymentMethod: {
       type: String,
@@ -56,6 +56,12 @@ const orderSchema = new Schema(
       status: { type: String, trim: true },
       update_time: { type: String, trim: true },
       email_adress: { type: String, trim: true },
+    },
+    itemsPrice: {
+      type: Number,
+      required: true,
+      trim: true,
+      default: 0.0,
     },
     taxPrice: {
       type: Number,

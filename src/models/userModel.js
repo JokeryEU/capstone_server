@@ -41,7 +41,6 @@ const userSchema = new Schema(
       required: true,
       enum: ['Admin', 'User'],
       default: 'User',
-      immutable: true,
     },
     refreshToken: { type: String },
     googleId: { type: String },

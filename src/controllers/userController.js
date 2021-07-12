@@ -28,7 +28,7 @@ export const registerUser = async (req, res, next) => {
   try {
     const newUser = await UserModel.create({
       ...req.body,
-      role: req.body.role === 'Admin' ? 'User' : 'User',
+      role: 'User',
     })
     if (newUser) {
       const user = await UserModel.checkCredentials(

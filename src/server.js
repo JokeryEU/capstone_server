@@ -14,6 +14,7 @@ import {
   forbiddenErrorHandler,
   duplicateRequestErrorHandler,
 } from './middlewares/errorHandlers.js'
+import { jwtAuth } from './auth/authUser.js'
 import listEndpoints from 'express-list-endpoints'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
@@ -44,6 +45,10 @@ app.use(morgan('dev'))
 app.use('/products', productRoutes)
 app.use('/users', userRoutes)
 app.use('/orders', orderRoutes)
+
+app.use('/config/paypal', jwtAuth, (req, res) =>
+  res.send(process.env.PAYPAL_CLIENT_ID)
+)
 
 // ERROR HANDLERS
 app.use(badRequestErrorHandler)

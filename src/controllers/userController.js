@@ -14,10 +14,6 @@ export const authUser = async (req, res, next) => {
       sameSite: 'lax',
       httpOnly: true,
     })
-    res.cookie('refreshToken', tokens.refreshToken, {
-      sameSite: 'lax',
-      httpOnly: true,
-    })
 
     res.status(200).send(user)
   } catch (error) {
@@ -44,10 +40,7 @@ export const registerUser = async (req, res, next) => {
         sameSite: 'lax',
         httpOnly: true,
       })
-      res.cookie('refreshToken', tokens.refreshToken, {
-        sameSite: 'lax',
-        httpOnly: true,
-      })
+
       res.status(201).send(newUser)
     } else {
       throw new ErrorResponse('User already exists', 400)
@@ -67,7 +60,7 @@ export const logoutUser = async (req, res, next) => {
     req.user.refreshToken = null
     await req.user.save()
     res.clearCookie('accessToken')
-    res.clearCookie('refreshToken')
+
     res.status(200).send()
   } catch (error) {
     next(error)
@@ -78,17 +71,12 @@ export const logoutUser = async (req, res, next) => {
 // @route POST /users/refreshtokens
 // @access Private
 export const refreshTokens = async (req, res, next) => {
-  const oldRefreshToken = req.body.refreshToken
-  if (!oldRefreshToken)
-    return next(new ErrorResponse('Refresh token is missing', 400))
+  const oldRefreshToken = req.user.refreshToken
+  if (!oldRefreshToken) return next(new ErrorResponse('Sign in first', 400))
 
   try {
     const newTokens = await refreshJWT(oldRefreshToken)
     res.cookie('accessToken', newTokens.accessToken, {
-      sameSite: 'lax',
-      httpOnly: true,
-    })
-    res.cookie('refreshToken', newTokens.refreshToken, {
       sameSite: 'lax',
       httpOnly: true,
     })

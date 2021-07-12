@@ -55,7 +55,7 @@ const orderSchema = new Schema(
       id: { type: String, trim: true },
       status: { type: String, trim: true },
       update_time: { type: String, trim: true },
-      email_adress: { type: String, trim: true },
+      email_address: { type: String, trim: true },
     },
     itemsPrice: {
       type: Number,

@@ -72,7 +72,7 @@ export const updateOrderToPaid = async (req, res, next) => {
         id: req.body.id,
         status: req.body.status,
         update_time: req.body.update_time,
-        email_adress: req.body.payer.email_adress,
+        email_address: req.body.payer.email_address,
       }
 
       const updatedOrder = await order.save()

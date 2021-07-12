@@ -18,7 +18,7 @@ const generateJWT = (user) =>
 export const verifyJWT = (token) =>
   new Promise((res, rej) =>
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, decoded) => {
-      if (error) rej(error)
+      if (error) rej(new ErrorResponse('Sign in again', 401))
       res(decoded)
     })
   )
@@ -58,12 +58,12 @@ export const refreshJWT = async (oldRefreshToken) => {
   const user = await UserModel.findOne({ _id: decoded._id })
 
   if (!user) {
-    throw new ErrorResponse('Login again', 401)
+    throw new ErrorResponse('Sign in again', 401)
   }
   const refreshToken = user.refreshToken
 
   if (refreshToken !== oldRefreshToken) {
-    throw new ErrorResponse('Login again', 401)
+    throw new ErrorResponse('Sign in again', 401)
   }
 
   const newAccessToken = await generateJWT({ _id: user._id })

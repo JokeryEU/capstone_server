@@ -180,6 +180,7 @@ export const updateUser = async (req, res, next) => {
       user.firstName = req.body.firstName || user.firstName
       user.lastName = req.body.lastName || user.lastName
       user.email = req.body.email || user.email
+      user.role = req.body.role || user.role
 
       const updatedUser = await user.save()
 

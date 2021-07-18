@@ -61,14 +61,21 @@ export const deleteProduct = async (req, res, next) => {
 // @access Private/Admin
 export const createProduct = async (req, res, next) => {
   try {
-    const newProduct = await ProductModel.create({
-      ...req.body,
+    const product = new ProductModel({
       user: req.user._id,
-      image: req.file.path,
+      name: 'Sample name',
+      price: 0,
+      image: 'https://via.placeholder.com/250.jpg',
+      brand: 'Sample Brand',
+      category: 'Sample Category',
+      countInStock: 0,
+      numReviews: 0,
+      description: 'Sample description',
     })
 
-    if (newProduct) {
-      res.status(201).send('Created')
+    const createdProduct = await product.save()
+    if (createdProduct) {
+      res.status(201).send(createdProduct)
     } else {
       throw new ErrorResponse('Bad request', 400)
     }
@@ -90,7 +97,9 @@ export const updateProduct = async (req, res, next) => {
       product.name = name || product.name
       product.price = price || product.price
       product.description = description || product.description
-      product.image = req.file ? req.file.path : product.image
+      product.image = req.files
+        ? req.files.map((img) => img.path)
+        : product.image
       product.brand = brand || product.brand
       product.category = category || product.category
       product.countInStock = countInStock || product.countInStock

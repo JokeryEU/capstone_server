@@ -18,7 +18,7 @@ router
   .post(
     jwtAuth,
     adminOnly,
-    uploadToCloudinary.single('prodImage'),
+    uploadToCloudinary.array('prodImage', 4),
     createProduct
   )
 
@@ -31,7 +31,7 @@ router
   .put(
     jwtAuth,
     adminOnly,
-    uploadToCloudinary.single('prodImage'),
+    uploadToCloudinary.array('prodImage', 4),
     updateProduct
   )
 

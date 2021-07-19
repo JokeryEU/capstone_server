@@ -161,3 +161,16 @@ export const createProductReview = async (req, res, next) => {
     next(error)
   }
 }
+
+// @description Get top rated products
+// @route GET /products/toprated
+// @access Public
+export const getTopRatedProducts = async (req, res, next) => {
+  try {
+    const products = await ProductModel.find({}).sort({ rating: -1 }).limit(3)
+
+    res.send(products)
+  } catch (error) {
+    next(error)
+  }
+}

@@ -6,6 +6,9 @@ import ErrorResponse from '../middlewares/errorResponse.js'
 // @access Public
 export const getProducts = async (req, res, next) => {
   try {
+    const pageSize = 10
+    const page = Number(req.query.pageNumber) || 1
+
     const keyword = req.query.keyword
       ? {
           name: {
@@ -14,9 +17,12 @@ export const getProducts = async (req, res, next) => {
         }
       : {}
 
+    const count = await ProductModel.countDocuments({ ...keyword })
     const products = await ProductModel.find({ ...keyword })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
 
-    res.status(200).send(products)
+    res.status(200).send({ products, page, pages: Math.ceil(count / pageSize) })
   } catch (error) {
     next(error)
   }

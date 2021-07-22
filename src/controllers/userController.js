@@ -11,7 +11,8 @@ export const authUser = async (req, res, next) => {
     const user = await UserModel.checkCredentials(email, password)
     const tokens = await auth(user)
     res.cookie('accessToken', tokens.accessToken, {
-      sameSite: 'lax',
+      sameSite: 'none',
+      secure: true,
       httpOnly: true,
     })
 
@@ -37,7 +38,8 @@ export const registerUser = async (req, res, next) => {
       )
       const tokens = await auth(user)
       res.cookie('accessToken', tokens.accessToken, {
-        sameSite: 'lax',
+        sameSite: 'none',
+        secure: true,
         httpOnly: true,
       })
 
@@ -77,7 +79,8 @@ export const refreshTokens = async (req, res, next) => {
   try {
     const newTokens = await refreshJWT(oldRefreshToken)
     res.cookie('accessToken', newTokens.accessToken, {
-      sameSite: 'lax',
+      sameSite: 'none',
+      secure: true,
       httpOnly: true,
     })
 

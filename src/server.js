@@ -32,9 +32,10 @@ const corsOptions = {
       next(new ErrorResponse(`NOT ALLOWED BY CORS`, 403))
     }
   },
+  credentials: true,
 }
 
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(cookieParser())
 app.use(passport.initialize())

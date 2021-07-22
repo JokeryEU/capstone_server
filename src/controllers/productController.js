@@ -103,9 +103,8 @@ export const updateProduct = async (req, res, next) => {
       product.name = name || product.name
       product.price = price || product.price
       product.description = description || product.description
-      product.image = req.files
-        ? req.files.map((img) => img.path)
-        : product.image
+      product.image =
+        req.files.length > 0 ? req.files.map((img) => img.path) : product.image
       product.brand = brand || product.brand
       product.category = category || product.category
       product.countInStock = countInStock || product.countInStock

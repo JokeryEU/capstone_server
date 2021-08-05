@@ -6,12 +6,10 @@ const reviewSchema = new Schema(
   {
     name: {
       type: String,
-      trim: true,
       required: true,
     },
     rating: {
       type: Number,
-      trim: true,
       required: true,
     },
     comment: {

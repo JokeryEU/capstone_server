@@ -19,7 +19,6 @@ const productSchema = new Schema(
     image: [
       {
         type: String,
-        trim: true,
         required: true,
       },
     ],
@@ -41,13 +40,11 @@ const productSchema = new Schema(
     reviews: [reviewSchema],
     rating: {
       type: Number,
-      trim: true,
       required: true,
       default: 0,
     },
     numReviews: {
       type: Number,
-      trim: true,
       required: true,
       default: 0,
     },

@@ -14,24 +14,20 @@ const orderSchema = new Schema(
       {
         name: {
           type: String,
-          trim: true,
           required: true,
         },
         qty: {
           type: Number,
-          trim: true,
           required: true,
         },
         image: [
           {
             type: String,
-            trim: true,
             required: true,
           },
         ],
         price: {
           type: Number,
-          trim: true,
           required: true,
         },
         product: {
@@ -48,39 +44,31 @@ const orderSchema = new Schema(
       postalCode: { type: String, trim: true, required: true },
       phoneNumber: { type: String, trim: true, required: true },
     },
-    paymentMethod: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+    paymentMethod: { type: String, required: true },
     paymentResult: {
-      id: { type: String, trim: true },
-      status: { type: String, trim: true },
-      update_time: { type: String, trim: true },
-      email_address: { type: String, trim: true },
+      id: { type: String },
+      status: { type: String },
+      update_time: { type: String },
+      email_address: { type: String },
     },
     itemsPrice: {
       type: Number,
       required: true,
-      trim: true,
       default: 0.0,
     },
     taxPrice: {
       type: Number,
       required: true,
-      trim: true,
       default: 0.0,
     },
     shippingPrice: {
       type: Number,
       required: true,
-      trim: true,
       default: 0.0,
     },
     totalPrice: {
       type: Number,
       required: true,
-      trim: true,
       default: 0.0,
     },
     isPaid: {

@@ -30,11 +30,9 @@ const userSchema = new Schema(
       type: String,
       required: true,
       minlength: [8, 'Minimum length must be 8 chars'],
-      trim: true,
     },
     profilePic: {
       type: String,
-      trim: true,
     },
     role: {
       type: String,

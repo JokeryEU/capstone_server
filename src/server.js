@@ -66,8 +66,6 @@ mongoose
   .connect(process.env.MONGODB_ADDRESS, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
   })
   .then(
     app.listen(port, () => {

@@ -126,7 +126,7 @@ export const getOrders = async (req, res, next) => {
   try {
     const orders = await OrderModel.find({}).populate(
       'user',
-      '_id firstName lastName'
+      'firstName lastName'
     )
 
     res.send(orders)

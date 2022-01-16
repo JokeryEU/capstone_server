@@ -11,8 +11,8 @@ export const authUser = async (req, res, next) => {
     const user = await UserModel.checkCredentials(email, password)
     const tokens = await auth(user)
     res.cookie('accessToken', tokens.accessToken, {
-      sameSite: 'none',
-      secure: true,
+      secure: process.env.NODE_ENV === 'production' ? true : false,
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       httpOnly: true,
     })
 
@@ -38,8 +38,8 @@ export const registerUser = async (req, res, next) => {
       )
       const tokens = await auth(user)
       res.cookie('accessToken', tokens.accessToken, {
-        sameSite: 'none',
-        secure: true,
+        secure: process.env.NODE_ENV === 'production' ? true : false,
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         httpOnly: true,
       })
 
@@ -74,13 +74,13 @@ export const logoutUser = async (req, res, next) => {
 // @access Private
 export const refreshTokens = async (req, res, next) => {
   const oldRefreshToken = req.user.refreshToken
-  if (!oldRefreshToken) return next(new ErrorResponse('Sign in first', 400))
+  if (!oldRefreshToken) throw new ErrorResponse('Sign in first', 400)
 
   try {
     const newTokens = await refreshJWT(oldRefreshToken)
     res.cookie('accessToken', newTokens.accessToken, {
-      sameSite: 'none',
-      secure: true,
+      secure: process.env.NODE_ENV === 'production' ? true : false,
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       httpOnly: true,
     })
 

@@ -62,7 +62,6 @@ export const logoutUser = async (req, res, next) => {
     req.user.refreshToken = null
     await req.user.save()
     res.clearCookie('accessToken')
-
     res.status(200).send()
   } catch (error) {
     next(error)

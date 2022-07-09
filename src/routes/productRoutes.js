@@ -13,15 +13,7 @@ import { uploadToCloudinary } from '../middlewares/picUpload.js'
 
 const router = express.Router()
 
-router
-  .route('/')
-  .get(getProducts)
-  .post(
-    jwtAuth,
-    adminOnly,
-    uploadToCloudinary.array('prodImage', 4),
-    createProduct
-  )
+router.route('/').get(getProducts).post(jwtAuth, adminOnly, createProduct)
 router.get('/toprated', getTopRatedProducts)
 
 router.route('/:id/reviews').post(jwtAuth, createProductReview)

@@ -1,10 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
-import passport from 'passport'
-
 import ErrorResponse from './middlewares/errorResponse.js'
-import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
 import {
   notFoundErrorHandler,
@@ -38,7 +35,6 @@ const corsOptions = {
 app.use(cors(corsOptions))
 app.use(express.json())
 app.use(cookieParser())
-app.use(passport.initialize())
 app.use(morgan('dev'))
 
 // ROUTES
@@ -59,14 +55,6 @@ app.use(unauthorizedErrorHandler)
 app.use(forbiddenErrorHandler)
 app.use(catchAllErrorHandler)
 
-const port = process.env.PORT || 3005
 console.table(listEndpoints(app))
 
-mongoose
-  .connect(process.env.MONGODB_ADDRESS, {})
-  .then(
-    app.listen(port, () => {
-      console.log('Running on port', port)
-    })
-  )
-  .catch((err) => console.log(err))
+export default app

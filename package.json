@@ -12,6 +12,7 @@
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
     "watch": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --watchAll",
     "dev": "nodemon -r dotenv/config ./src",
+    "build": "npm install",
     "start": "node ./src/index.js"
   },
   "keywords": [],

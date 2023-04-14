@@ -3,7 +3,6 @@ import app from './server.js'
 
 const port = process.env.PORT || 3005
 
-mongoose.set('strictQuery', false)
 mongoose
   .connect(process.env.MONGODB_ADDRESS, {})
   .then(

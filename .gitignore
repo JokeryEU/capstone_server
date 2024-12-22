@@ -75,3 +75,7 @@ typings/
 
 # FuseBox cache
 .fusebox/
+
+# Bun lock
+bun.lock
+bun.lockb

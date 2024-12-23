@@ -1,6 +1,5 @@
 import express from 'express'
 import cors from 'cors'
-import morgan from 'morgan'
 import ErrorResponse from './middlewares/errorResponse.js'
 import helmet from 'helmet'
 import cookieParser from 'cookie-parser'
@@ -36,7 +35,6 @@ app.use(helmet())
 app.use(cors(corsOptions))
 app.use(express.json())
 app.use(cookieParser())
-app.use(morgan('dev'))
 
 // ROUTES
 

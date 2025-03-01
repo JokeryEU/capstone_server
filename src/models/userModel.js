@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import bcrypt from 'bcrypt'
+import { password } from 'bun'
 import ErrorResponse from '../middlewares/errorResponse.js'
 
 const { Schema, model } = mongoose
@@ -48,10 +48,10 @@ const userSchema = new Schema(
 
 userSchema.pre('save', async function (next) {
   if (this.isModified('password')) {
-    this.password = await bcrypt.hash(
-      this.password,
-      parseInt(process.env.SALT_ROUNDS)
-    )
+    this.password = await password.hash(this.password, {
+      algorithm: 'bcrypt',
+      cost: parseInt(process.env.SALT_ROUNDS),
+    })
   }
   next()
 })
@@ -59,7 +59,7 @@ userSchema.pre('save', async function (next) {
 userSchema.statics.checkCredentials = async function (email, enteredPassword) {
   const user = await this.findOne({ email })
   if (user) {
-    const isMatch = await bcrypt.compare(enteredPassword, user.password)
+    const isMatch = password.verify(enteredPassword, user.password)
     if (isMatch) return user
     else throw new ErrorResponse('Invalid email or password', 401)
   } else throw new ErrorResponse('Invalid email or password', 401)

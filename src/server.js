@@ -3,16 +3,8 @@ import cors from 'cors'
 import ErrorResponse from './middlewares/errorResponse.js'
 import helmet from 'helmet'
 import cookieParser from 'cookie-parser'
-import {
-  notFoundErrorHandler,
-  badRequestErrorHandler,
-  catchAllErrorHandler,
-  unauthorizedErrorHandler,
-  forbiddenErrorHandler,
-  duplicateRequestErrorHandler,
-} from './middlewares/errorHandlers.js'
+import { errorHandlers } from './middlewares/errorHandlers.js'
 import { jwtAuth } from './auth/authUser.js'
-import listEndpoints from 'express-list-endpoints'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
@@ -47,13 +39,6 @@ app.use('/config/paypal', jwtAuth, (req, res) =>
 )
 
 // ERROR HANDLERS
-app.use(badRequestErrorHandler)
-app.use(duplicateRequestErrorHandler)
-app.use(notFoundErrorHandler)
-app.use(unauthorizedErrorHandler)
-app.use(forbiddenErrorHandler)
-app.use(catchAllErrorHandler)
-
-console.table(listEndpoints(app))
+app.use(errorHandlers)
 
 export default app

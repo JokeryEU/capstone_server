@@ -1,7 +1,5 @@
-import mongoose from 'mongoose'
+import { Schema, model } from 'mongoose'
 import reviewSchema from './reviewModel.js'
-
-const { Schema, model } = mongoose
 
 const productSchema = new Schema(
   {

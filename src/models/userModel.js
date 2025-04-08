@@ -1,8 +1,6 @@
-import mongoose from 'mongoose'
+import { Schema, model } from 'mongoose'
 import { password } from 'bun'
 import ErrorResponse from '../middlewares/errorResponse.js'
-
-const { Schema, model } = mongoose
 
 const userSchema = new Schema(
   {
